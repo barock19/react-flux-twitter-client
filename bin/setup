@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+
+var inquirer = require('inquirer'),
+    fs = require('fs'),
+    path = require('path'),
+    fileName = path.resolve(__dirname + "/../config/twitter.json");
+
+var questionList = [
+  {
+    type: "input",
+    name: "consumer_key",
+    message: "Consumer Key : "
+  },
+  {
+    type: "input",
+    name: "consumer_secret",
+    message: "Consumer Secret : "
+  },
+  {
+    type: "input",
+    name: "access_token_key",
+    message: "Access token key : "
+  },
+  {
+    type: "input",
+    name: "access_token_secret",
+    message: "Access token secret : "
+  }
+];
+console.log("Please provide your twitter credential.");
+
+inquirer.prompt(questionList, function(answer){
+  fs.writeFile(fileName, JSON.stringify(answer, null, 4), function(error){
+    if(error) throw error ;
+    console.log("config write at " + fileName);
+  })
+})
